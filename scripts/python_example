@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+from __future__ import print_function
+import pyexotica as exo
+from time import time
+
+# The following line initialises an internal ROS node in case you want to publish some debug information. Sleep for half a second afterwards to make sure everything is propagated through properly.
+# exo.Setup.initRos()
+
+# Load the config to instantiate a problem. Since we aren't trying to run a solver, we will load the problem stand-alone.
+problem = exo.Setup.loadProblem('{exotica_valkyrie_collision_checking_example}/resources/val_collision_check_config.xml')
+scene = problem.getScene()
+kinematicTree = scene.getSolver()
+
+# Get a random configuration
+q_rand = kinematicTree.getRandomControlledState()
+
+s = time()
+
+# Update the problem
+problem.update(q_rand)
+
+# Check whether the state is collision-free
+#  - The first argument (bool) indicates whether to check self-collisions
+#  - The second argument (double, optional) specifies a "safe" distance. Keep it low as the pelvis and torso easily collide.
+isValid = scene.isStateValid(True)
+
+e = time()
+print("Collision check in ", e-s, ":", isValid)
+
+# For Python 2 and Ubuntu 14.04, delete the allocated problem and scene manually
+del scene
+del problem

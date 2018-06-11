@@ -1,0 +1,11 @@
+<CollisionCheckingDemoConfig>
+    <UnconstrainedEndPoseProblem Name="MyProblem">
+        <PlanningScene>
+            <Scene Name="MyScene">
+                <JointGroup>whole_body</JointGroup>
+                <URDF>{exotica_examples}/resources/robots/valkyrie_sim.urdf</URDF>
+                <SRDF>{exotica_examples}/resources/robots/valkyrie_sim.srdf</SRDF>
+            </Scene>
+        </PlanningScene>
+    </UnconstrainedEndPoseProblem>
+</CollisionCheckingDemoConfig>
